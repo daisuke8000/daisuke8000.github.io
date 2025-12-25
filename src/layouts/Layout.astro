@@ -4,7 +4,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Software Engineer passionate about building developer tools with Rust." } = Astro.props;
+const { title, description = "Software Engineer building developer tools with Rust. Creator of Coral and mbr-cli." } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,7 +13,13 @@ const { title, description = "Software Engineer passionate about building develo
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#050508" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -23,19 +29,6 @@ const { title, description = "Software Engineer passionate about building develo
 </html>
 
 <style is:global>
-  :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-card: #1a1a24;
-    --text-primary: #e0e0e0;
-    --text-secondary: #888;
-    --accent-cyan: #00ffff;
-    --accent-magenta: #ff00ff;
-    --accent-yellow: #ffcc00;
-    --glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
-    --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.3);
-  }
-
   * {
     margin: 0;
     padding: 0;
@@ -43,32 +36,47 @@ const { title, description = "Software Engineer passionate about building develo
   }
 
   html {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
     scroll-behavior: smooth;
   }
 
   body {
-    min-height: 100vh;
-    background:
-      radial-gradient(ellipse at top, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
-      var(--bg-primary);
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #050508;
+    color: #e8e8ed;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   a {
-    color: var(--accent-cyan);
+    color: inherit;
     text-decoration: none;
-    transition: all 0.2s ease;
   }
 
-  a:hover {
-    text-shadow: var(--glow-cyan);
+  img {
+    max-width: 100%;
+    display: block;
   }
 
   ::selection {
-    background: var(--accent-cyan);
-    color: var(--bg-primary);
+    background: rgba(0, 245, 255, 0.3);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1a1a24;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a2a3a;
   }
 </style>
