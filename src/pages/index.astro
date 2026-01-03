@@ -3,6 +3,16 @@ import Layout from '../layouts/Layout.astro';
 
 const projects = [
   {
+    name: "rumin",
+    icon: "voice",
+    tagline: "Reflect with your voice.",
+    description: "Voice-powered KPT retrospective web app. Have natural conversations with an AI facilitator to reflect on your day. Supports voice input and Google Sheets integration for seamless logging.",
+    tech: ["Rust", "TypeScript", "React", "Cloudflare Workers", "Web Speech API"],
+    demo: "https://rumin.cc",
+    accent: "green",
+    features: ["Voice Input", "AI Facilitator", "KPT Method"]
+  },
+  {
     name: "Coral",
     icon: "coral",
     tagline: "Visualize. Understand. Ship.",
@@ -123,7 +133,12 @@ const skills = [
               <div class="project-content">
                 <div class="project-top">
                   <div class="project-icon">
-                    {project.icon === "coral" ? (
+                    {project.icon === "voice" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4z"/>
+                        <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/>
+                      </svg>
+                    ) : project.icon === "coral" ? (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M12 3v18M12 3c-2 2-4 4-4 8s2 6 4 8M12 3c2 2 4 4 4 8s-2 6-4 8M5 8c2 0 4 2 7 2s5-2 7-2M5 16c2 0 4-2 7-2s5 2 7 2"/>
                       </svg>
@@ -225,6 +240,7 @@ const skills = [
           <span class="tech-tag">GraphQL</span>
           <span class="tech-tag">Hono</span>
           <span class="tech-tag">Cloudflare Workers</span>
+          <span class="tech-tag">Web Speech API</span>
         </div>
       </div>
     </section>
@@ -264,6 +280,8 @@ const skills = [
     --yellow: #ffd600;
     --purple: #a855f7;
     --purple-dim: #7c3aed;
+    --green: #10b981;
+    --green-dim: #059669;
     --border: rgba(255, 255, 255, 0.06);
     --glow-cyan: 0 0 30px rgba(0, 245, 255, 0.4), 0 0 60px rgba(0, 245, 255, 0.2);
     --glow-magenta: 0 0 30px rgba(255, 0, 255, 0.4), 0 0 60px rgba(255, 0, 255, 0.2);
@@ -634,6 +652,10 @@ const skills = [
     background: linear-gradient(90deg, transparent, var(--purple), transparent);
   }
 
+  .project-card.green .project-glow {
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
   .project-card:hover .project-glow {
     opacity: 1;
   }
@@ -662,6 +684,10 @@ const skills = [
 
   .project-card.purple .project-border {
     background: linear-gradient(135deg, transparent 40%, var(--purple) 100%);
+  }
+
+  .project-card.green .project-border {
+    background: linear-gradient(135deg, transparent 40%, var(--green) 100%);
   }
 
   .project-card:hover .project-border {
@@ -711,6 +737,11 @@ const skills = [
     color: var(--purple);
   }
 
+  .project-card.green .project-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--green);
+  }
+
   .project-icon svg {
     width: 24px;
     height: 24px;
@@ -757,6 +788,7 @@ const skills = [
   .project-card.magenta .project-tagline { color: var(--magenta); }
   .project-card.yellow .project-tagline { color: var(--yellow); }
   .project-card.purple .project-tagline { color: var(--purple); }
+  .project-card.green .project-tagline { color: var(--green); }
 
   .project-desc {
     color: var(--text-secondary);
@@ -820,6 +852,10 @@ const skills = [
 
   .project-card.purple .action-link.primary {
     color: var(--purple);
+  }
+
+  .project-card.green .action-link.primary {
+    color: var(--green);
   }
 
   /* ===== SKILLS ===== */
