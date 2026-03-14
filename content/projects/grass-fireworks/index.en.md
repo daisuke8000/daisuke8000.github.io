@@ -8,6 +8,7 @@ tags = ["typescript", "cloudflare-workers"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/grass-fireworks"
+category = "creative"
 +++
 
 Generates animated SVG fireworks based on your daily GitHub contribution count. Embed it in your README — no JavaScript required.

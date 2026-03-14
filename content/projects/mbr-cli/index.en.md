@@ -8,6 +8,7 @@ tags = ["rust", "cli", "tui"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/mbr-cli"
+category = "cli / tui"
 +++
 
 An async CLI / TUI tool for interacting with Metabase from the terminal.

@@ -8,6 +8,7 @@ tags = ["rust", "cli", "tui"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/mbr-cli"
+category = "cli / tui"
 +++
 
 Metabase をターミナルから操作する非同期 CLI / TUI ツール。

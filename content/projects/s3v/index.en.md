@@ -8,6 +8,7 @@ tags = ["rust", "cli", "tui", "aws"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/s3v"
+category = "cli / tui"
 +++
 
 A Rust-based TUI application for browsing S3 buckets in a 3-pane Miller columns layout. Read-only by design for safe exploration.

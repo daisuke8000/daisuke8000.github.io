@@ -8,6 +8,7 @@ tags = ["typescript", "cloudflare-workers"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/grass-fireworks"
+category = "creative"
 +++
 
 GitHub の日々のコントリビューション数に応じて、花火の SVG アニメーションを生成するツール。README に画像として埋め込める。

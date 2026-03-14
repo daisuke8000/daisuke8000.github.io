@@ -8,6 +8,7 @@ tags = ["rust", "typescript", "grpc", "protobuf"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/coral"
+category = "visualizer"
 +++
 
 `.proto` ファイルの依存関係グラフをインタラクティブに可視化するツール。

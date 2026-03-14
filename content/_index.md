@@ -2,34 +2,11 @@
 title = "dsk8.dev"
 description = "ソフトウェアエンジニア — Go / TypeScript メイン、趣味で Rust / Zig"
 sort_by = "date"
-template = "section.html"
+template = "index.html"
 page_template = "page.html"
+
+[extra]
+projects_path = "projects/_index.md"
+max_projects = 5
+section_path = "blog/_index.md"
 +++
-
-ソフトウェアエンジニアやってます。ふだんは Go / TypeScript / React でごはん食べてます。
-
-休みの日は Rust とか Zig で好きなもの作ってます 🦀
-
-## 🛠 つくったもの
-
-- 🪸 **[Coral](/projects/coral/)** — Protobuf の依存関係をいい感じに可視化するやつ
-- 📊 **[mbr-cli](/projects/mbr-cli/)** — ターミナルから Metabase を触れる CLI / TUI
-- 🎆 **[grass-fireworks](/projects/grass-fireworks/)** — GitHub の草を花火にして README に貼れるやつ
-- 📂 **[s3v](/projects/s3v/)** — S3 バケットを 3 ペインで閲覧できる TUI ブラウザ
-- 🌊 **[flowrs](/projects/flowrs/)** — Argo Workflows を k9s ライクに操作する TUI クライアント
-
-→ [すべてのプロジェクトを見る](/projects/)
-
-## ⚡ 技術スタック
-
-**🔧 メインで使っているもの**
-
-`Go` `TypeScript` `React` `MySQL` `Docker`
-
-**🦀 趣味で書いているもの**
-
-`Rust` `Zig`
-
-**👀 さわったことがあるもの**
-
-`Elixir` `Phoenix` `AWS` `Kubernetes` `Cloudflare Workers` `Terraform`

@@ -8,6 +8,7 @@ tags = ["rust", "cli", "tui", "kubernetes"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/flowrs"
+category = "cli / tui"
 +++
 
 Argo Workflows を k9s ライクに操作できる Rust 製 TUI クライアント。ワークフローの一覧・詳細・ログをターミナルから素早く確認できる。

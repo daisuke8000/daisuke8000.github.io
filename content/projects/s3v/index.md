@@ -8,6 +8,7 @@ tags = ["rust", "cli", "tui", "aws"]
 
 [extra]
 link_to = "https://github.com/daisuke8000/s3v"
+category = "cli / tui"
 +++
 
 S3 バケットの中身を 3 ペインレイアウトで直感的にブラウジングできる Rust 製 TUI アプリケーション。読み取り専用で安全に操作できる。
