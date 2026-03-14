@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+{%- if lang == config.default_language -%}
+    {%- set expected_root = "/" -%}
+{%- else -%}
+    {%- set expected_root = "/" ~ lang ~ "/" -%}
+{%- endif -%}
+{%- set is_root_section = current_path == expected_root -%}
+
+{%- if is_root_section -%}
+    {%- set show_projects_first = section.extra.show_projects_first | default(value=false) -%}
+    <main>
+        {%- if section.content -%}
+            <section>{{ section.content | safe }}</section>
+        {%- endif -%}
+
+        {%- if show_projects_first -%}
+            {%- include "partials/main_page_projects_list.html" -%}
+            {%- include "partials/main_page_posts_list.html" -%}
+        {%- else -%}
+            {%- include "partials/main_page_posts_list.html" -%}
+            {%- include "partials/main_page_projects_list.html" -%}
+        {%- endif -%}
+    </main>
+{%- else -%}
+    {{ macros_page_header::page_header(title=section.title) }}
+
+    <main>
+        {%- if section.content -%}
+            <div id="page-content">{{ section.content | safe }}</div>
+        {%- endif -%}
+
+        {%- if paginator -%}
+            {%- set show_pages = paginator.pages -%}
+        {%- else -%}
+            {%- set show_pages = section.pages -%}
+        {%- endif -%}
+
+        {%- if show_pages | length > 0 -%}
+            {{ macros_list_posts::list_posts(
+                posts=show_pages,
+                language_strings=language_strings,
+                section_path=section.path,
+                paginator=paginator,
+                pinned_first=section.extra.pinned_first | default(value=false),
+                current_page=paginator.current_index | default(value=1)
+            ) }}
+        {%- endif -%}
+    </main>
+
+    {%- if paginator -%}
+        {%- include "partials/paginate.html" -%}
+    {%- endif -%}
+{%- endif -%}
+
+{% endblock main_content %}
