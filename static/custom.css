@@ -1,0 +1,91 @@
+/* レイアウト — セクション間の余白とバランス */
+.content h2 {
+  margin-top: 2.5em;
+  margin-bottom: 0.8em;
+}
+
+.content h2:first-of-type {
+  margin-top: 2em;
+}
+
+/* 自己紹介エリアを少し大きく */
+.content > p:first-of-type {
+  font-size: 1.15em;
+  line-height: 1.7;
+}
+
+/* 技術スタックをラベル風に */
+.content p > code {
+  display: inline-block;
+  padding: 0.3em 0.85em;
+  margin: 0.25em 0.15em;
+  border-radius: 2em;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+}
+
+.content p > code:hover {
+  background: var(--primary-color);
+  color: var(--bg-0);
+}
+
+/* トップページのプロジェクトリスト — ミニカード風 */
+.content ul > li {
+  list-style: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1em 1.2em;
+  margin-bottom: 0.6em;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.content ul > li:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 16px rgba(var(--primary-color-rgb, 8, 126, 150), 0.12);
+  transform: translateY(-1px);
+}
+
+.content ul {
+  padding-left: 0;
+}
+
+/* プロジェクトカード */
+.card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(var(--primary-color-rgb, 8, 126, 150), 0.15);
+  transform: translateY(-2px);
+}
+
+.card .card-title {
+  font-weight: 700;
+}
+
+.card .card-description {
+  opacity: 0.85;
+}
+
+/* カード内のタグラベル */
+.card .taxonomies li a {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2em;
+  padding: 0.15em 0.6em;
+  font-size: 0.8em;
+  transition: border-color 0.2s;
+}
+
+.card .taxonomies li a:hover {
+  border-color: var(--primary-color);
+}

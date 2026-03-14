@@ -1,0 +1,85 @@
+base_url = "https://daisuke8000.github.io"
+title = "dsk8.dev"
+description = "Software Engineer — Go / TypeScript / Rust / Zig"
+default_language = "ja"
+theme = "tabi"
+
+compile_sass = true
+minify_html = false
+build_search_index = false
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+taxonomies = [{ name = "tags", feed = true }]
+
+[search]
+include_title = true
+include_description = true
+include_path = true
+include_content = true
+index_format = "elasticlunr_json"
+
+[markdown]
+bottom_footnotes = true
+smart_punctuation = true
+
+[markdown.highlighting]
+theme = "catppuccin-frappe"
+style = "class"
+error_on_missing_language = true
+
+[link_checker]
+skip_anchor_prefixes = ["https://github.com/"]
+
+[slugify]
+paths = "on"
+taxonomies = "on"
+anchors = "on"
+
+[languages.en]
+title = "dsk8.dev"
+description = "Software Engineer — Go / TypeScript / Rust / Zig"
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+taxonomies = [{ name = "tags", feed = true }]
+build_search_index = true
+
+[extra]
+theme_switcher = true
+default_theme = "dark"
+skin = "teal"
+
+author = { name = "Daisuke", url = "https://daisuke8000.github.io" }
+show_author = false
+stylesheets = ["custom.css"]
+
+menu = [
+    { name = "blog", url = "blog", trailing_slash = true },
+    { name = "projects", url = "projects", trailing_slash = true },
+    { name = "archive", url = "archive", trailing_slash = true },
+    { name = "tags", url = "tags", trailing_slash = true },
+]
+
+show_date = true
+show_reading_time = true
+show_word_count = false
+long_date_format = "%Y-%m-%d"
+short_date_format = "%Y-%m-%d"
+
+toc = true
+copy_button = true
+enable_csp = true
+
+socials = [
+    { name = "github", url = "https://github.com/daisuke8000", icon = "github" },
+]
+
+copyright = "© $CURRENT_YEAR daisuke8000"
+show_remote_changes = false
+show_remote_source = false
+
+allowed_domains = [
+    { directive = "font-src", domains = ["'self'", "data:"] },
+    { directive = "img-src", domains = ["'self'", "https://*", "data:"] },
+    { directive = "script-src", domains = ["'self'"] },
+    { directive = "style-src", domains = ["'self'"] },
+]
