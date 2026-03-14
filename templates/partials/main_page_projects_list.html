@@ -1,0 +1,39 @@
+{% if section.extra.projects_path %}
+    {%- set projects_section = get_section(path=section.extra.projects_path) -%}
+    {%- if projects_section -%}
+        <div class="section-label"><span>{{ macros_translate::translate(key="featured_projects", default="Projects", language_strings=language_strings) }}</span></div>
+
+        <div class="featured-projects">
+            {%- set max_projects = section.extra.max_projects | default(value=3) -%}
+            {%- for page in projects_section.pages -%}
+                {% if loop.index > max_projects %}
+                    {% break %}
+                {% endif %}
+                {%- set target_url = page.extra.link_to | default(value=page.permalink) -%}
+                <a class="featured-item" href="{{ target_url }}">
+                    <span class="num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+                    <div class="info">
+                        <div class="name">{{ page.title }}</div>
+                        {% if page.description %}
+                            <div class="desc">{{ page.description }}</div>
+                        {% endif %}
+                    </div>
+                    {% if page.taxonomies.tags %}
+                        <span class="tech">
+                            {%- for tag in page.taxonomies.tags | slice(end=2) -%}
+                                {{ tag }}{% if not loop.last %} &middot; {% endif %}
+                            {%- endfor -%}
+                        </span>
+                    {% endif %}
+                    <span class="arrow">&rarr;</span>
+                </a>
+            {%- endfor -%}
+        </div>
+
+        {%- if projects_section.pages | length > max_projects -%}
+            <a class="see-all" href="{{ get_url(path=projects_section.path, lang=lang) }}/">
+                {{ macros_translate::translate(key="all_projects", default="All projects", language_strings=language_strings) }} &rarr;
+            </a>
+        {%- endif -%}
+    {%- endif -%}
+{% endif %}
