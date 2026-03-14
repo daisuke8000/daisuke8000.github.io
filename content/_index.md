@@ -15,6 +15,8 @@ page_template = "page.html"
 - 🪸 **[Coral](/projects/coral/)** — Protobuf の依存関係をいい感じに可視化するやつ
 - 📊 **[mbr-cli](/projects/mbr-cli/)** — ターミナルから Metabase を触れる CLI / TUI
 - 🎆 **[grass-fireworks](/projects/grass-fireworks/)** — GitHub の草を花火にして README に貼れるやつ
+- 📂 **[s3v](/projects/s3v/)** — S3 バケットを 3 ペインで閲覧できる TUI ブラウザ
+- 🌊 **[flowrs](/projects/flowrs/)** — Argo Workflows を k9s ライクに操作する TUI クライアント
 
 → [すべてのプロジェクトを見る](/projects/)
 
