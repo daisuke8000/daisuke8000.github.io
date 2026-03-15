@@ -59,7 +59,7 @@ match do_something() {
 }
 ```
 
-With `match`, you must cover both `Ok` and `Err` or the code won't compile. You can also use the `?` operator for early returns, but either way, you have to acknowledge the possibility of errors to access what's inside a Result. Of course, Rust also lets you `.unwrap()` (which panics on error) or write `let _ =` to ignore a Result. But those are conscious choices — qualitatively different from the risk of silently overlooking errors in Go ([try it on Rust Playground](https://play.rust-lang.org/?gist=eb9d1d7b90562d892fb90349b713e0a8)). Tools like `errcheck` can catch this in Go, but Rust's compiler warns you by default. The default level of safety is simply different. That sense of confidence was hard to get in Go.
+With `match`, you must cover both `Ok` and `Err` or the code won't compile. The `?` operator offers a concise alternative for early returns, but either way, you have to acknowledge errors to access what's inside a Result. You can still `.unwrap()` or `let _ =` to ignore a Result, but those are conscious choices ([try it on Rust Playground](https://play.rust-lang.org/?gist=eb9d1d7b90562d892fb90349b713e0a8)). Go has linters like `errcheck` for this, but Rust's compiler warns you by default. That difference matters.
 
 And there's more: you can transform the contents of a Result without unwrapping it.
 
@@ -85,6 +85,8 @@ What's more, the API design is consistent. Once you learn `.map().filter().colle
 
 ## In Closing
 
-Ownership, Result types, method chaining. These might look like separate features, but I think they share the same design philosophy: Rust asks you to think, and rewards that thinking with safety and expressiveness.
+Ownership, Result types, combinators. These might look like separate features, but I think they share the same design philosophy: Rust asks you to think, and rewards that thinking with safety and expressiveness.
 
 It'll take more time before I fully understand everything Rust has to offer. But I'm drawn to this "slightly difficult" quality. Choosing a kind of friction that work doesn't require, deliberately, in my own time — that's what growth feels like to me, and that's why I write Rust.
+
+I've been reading [*Unit Testing Principles, Practices, and Patterns*](https://www.amazon.co.jp/dp/4839981728) lately. I might write about that too, when the mood strikes.
