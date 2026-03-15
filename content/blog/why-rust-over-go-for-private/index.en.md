@@ -1,6 +1,6 @@
 +++
 title = "Why I Use Rust Instead of Go for Personal Projects"
-description = "A software engineer who writes Go and TypeScript at work explores why Rust is the language of choice for personal projects"
+description = "Hard, they said. But everyone seemed to love it. So I tried it, and got hooked. A Go engineer's journey into Rust for personal projects"
 date = 2026-03-15
 
 [taxonomies]
@@ -13,61 +13,57 @@ quick_navigation_buttons = true
 
 I write Go and TypeScript at work. In my personal time, I write Rust.
 
-Why Rust? It's not easy to explain, but I'd like to try.
+Rust is supposed to be hard. Yet it's weirdly popular. I got curious, gave it a try, and got more hooked than I expected. I'd never properly articulated why, so let me try to sort it out.
 
-## What I Look for at Work vs. Personal Projects
+## Why Rust
 
-Go is simple, with low cognitive overhead. TypeScript is easy to pick up as an extension of JavaScript. Compared to Rust, both have gentler learning curves, and new team members can ramp up quickly. As work languages, that's a major strength.
+I write Go and TypeScript at work, and I don't really have complaints. Simple languages with low cognitive overhead are great for shipping results as a team. I get that.
 
-But what I look for in personal projects is different.
+But somehow, work code alone doesn't feel like enough. I can write it, but it doesn't make me think. My hands keep moving, but I feel like my brain has stopped too.
 
-At work, what's needed is **productivity** — delivering results as a team within limited time. Go and TypeScript serve that well. In my personal time, what I'm after is a **sense of growth**. The feeling that I'm being challenged. That I'm thinking more deeply. There's something to be gained from deliberately choosing a language with higher cognitive demands.
+That's when Rust caught my eye. People kept saying it was "hard," yet everyone using it seemed to be having a great time. It topped Stack Overflow's "most loved language" ranking for years. Hard but beloved — what's that about?
 
-This isn't about Go or TypeScript being bad languages. It's simply that different contexts call for different things.
+I've never minded tackling hard things. If anything, I'm the type who enjoys the time spent thinking "why won't this work" while the compiler yells at me. That temperament and Rust turned out to be a good match.
 
-## The Hassle of Rust
+On top of that, I like building CLIs and TUIs, and Rust's ecosystem happens to be strong there. Assemble CLI arguments with clap, draw terminal UIs with ratatui, run async with tokio. These crates are mature, and what I wanted to build lined up with the language I wanted to use. I've actually built a TUI tool for browsing S3 buckets in Rust ([s3v](https://github.com/daisuke8000/s3v)).
 
-Rust is demanding. Ownership, borrowing, lifetimes. The compiler shows no mercy.
+## Getting Hit by Ownership and Lifetimes
 
-At first, there was real resistance. Code that would compile fine in Go or TypeScript gets rejected in Rust. In Go especially, you can get to a working state without thinking about memory management or ownership. In Rust, that's not an option.
+Plenty has been written about Rust being a pain. The compiler is strict, but when it passes you feel safe — that kind of thing. I agree, but that alone doesn't really convey the experience, so let me talk about where I actually got stuck.
 
-But after writing Rust for a while, things change. You get better at reading compiler errors. You start having those moments of "ah, so that's how you write it." You realize the compiler is strict because it's pushing you to think.
+When I was building s3v — a TUI app for browsing S3 buckets — the thing that made me think hardest was lifetimes.
 
-This hassle is what I'd call **good friction**. At work, efficiency takes priority, so there's little room to enjoy this kind of friction. Personal projects give me the space to sit with it. And when compilation succeeds, the confidence it gives is qualitatively different from Go or TypeScript. It's not "it seems to work" — it's "I thought this through, and it works."
+In a TUI event loop, you need to receive user key input, fetch data from S3 asynchronously in the background, and redraw the screen. In Go, you'd knock that out with goroutines and channels.
 
-## A Different Experience of Errors
-
-Error handling in Go and Rust feels quite different in practice.
-
-In Go, functions return both a value and an error.
-
-```go
-value, err := doSomething()
-if err != nil {
-    return err
-}
-```
-
-You write `if err != nil` over and over. By design, this is meant to make you think about how to handle each error. But honestly, a lot of it feels like ritual — writing it because that's what you do. If you discard the error with `_` or ignore the return values entirely, the code compiles and runs just fine ([try it on Go Playground](https://go.dev/play/p/io24YnMyZmP)). That leaves a small sense of unease.
-
-In Rust, success and failure are wrapped in a single type: `Result<T, E>`.
+In Rust, it wasn't that easy. When I tried to extract the async logic into a function, the compiler asked, "how long does that reference live?" I ended up with a signature like this:
 
 ```rust
-match do_something() {
-    Ok(value) => { /* handle success */ },
-    Err(e) => { /* handle failure */ },
-}
+fn handle_single_command<'a>(
+    app: &'a mut App,
+    s3_client: &'a S3Client,
+    preview: &'a mut PreviewState,
+    ctx: &'a mut CommandContext,
+    stream_tx: &'a mpsc::UnboundedSender<Event>,
+    cmd: Command,
+) -> Pin<Box<dyn Future<Output = Result<()>> + 'a>>
 ```
 
-With `match`, you must cover both `Ok` and `Err` or the code won't compile. The `?` operator offers a concise alternative for early returns, but either way, you have to acknowledge errors to access what's inside a Result. You can still `.unwrap()` or `let _ =` to ignore a Result, but those are conscious choices ([try it on Rust Playground](https://play.rust-lang.org/?gist=eb9d1d7b90562d892fb90349b713e0a8)). Go has linters like `errcheck` for this, but Rust's compiler warns you by default. That difference matters.
+That `'a` is a declaration saying "all the references passed to this function share the same lifetime." When I first saw it, I honestly had no idea what it meant. But without it, the compiler complains: "the lifetimes of `app`, `preview`, and `s3_client` might differ, so I can't tell how long the returned Future is allowed to live." It's something I'd never even thought about in Go.
 
-And there's more: you can transform the contents of a Result without unwrapping it.
+Another stumbling block was passing data between async tasks. In s3v, image decoding runs in a background task while the main loop handles rendering. The question was: how do you hand off the decoded image?
+
+```rust
+pub(crate) image_slot: Arc<std::sync::Mutex<Option<image::DynamicImage>>>,
+pub(crate) pdf_data_slot: Arc<std::sync::Mutex<Option<Vec<u8>>>>,
+```
+
+`Arc<Mutex<T>>` — wrap it in a reference-counted smart pointer, then use a Mutex for exclusive access. In Go, you'd pass it through a channel or share a pointer and hope for the best. In Rust, if you don't explicitly tell the compiler "multiple tasks might touch this data," it won't even build.
+
+It's a hassle. But thanks to that hassle, I'm catching data race risks at the design stage — risks I'd have written right past in Go without noticing. Once the compiler passes, you know at least there are no data races. That sense of safety is something I never got writing Go at work.
 
 ## The Joy of Operating on the Box
 
-In Go, builder patterns and similar use method chains, but there's no idiom for chaining combinators on types like Option or Result. The standard approach is to assign to a variable at each step and check errors along the way.
-
-In Rust, Option, Result, and Iterator all have `.map()` and `.and_then()`.
+I've mostly written about getting beaten up by ownership and lifetimes, but Rust has moments that genuinely feel good too. For me, that was combinators.
 
 ```rust
 // get_config() → Option<Config>
@@ -77,16 +73,55 @@ let name = get_config()
     .and_then(|u| u.name());
 ```
 
-You can chain transformations without extracting the value. This "operating on the box" feeling was genuinely fun to discover.
+You chain transformations without extracting the value. This "operating on the box" feeling was genuinely fun.
 
-It might be familiar if you come from Ruby, Kotlin, or Swift. But in Rust, it's all type-checked. If types don't line up inside `.map()`, you get a compile error. Expressive and safe.
+If you've used Ruby, Kotlin, or Swift, this might feel familiar. But in Rust, it's all guarded by the type system. If the types don't line up inside `.map()`, you get a compile error. Expressive to write, and safe.
 
-What's more, the API design is consistent. Once you learn `.map().filter().collect()` on Iterator, you find the same patterns on Option with `.map().unwrap_or()`, and on Result too. One pattern unlocks many types. Knowledge connects laterally.
+Working on s3v, this pattern shows up everywhere. For example, fetching from a cache:
+
+```rust
+pub fn get_cached(&self, path: &S3Path) -> Option<&Vec<S3Item>> {
+    let key = path.to_s3_uri();
+    self.cache.get(&key).and_then(|entry| {
+        if entry.is_expired() { None } else { Some(&entry.items) }
+    })
+}
+```
+
+The `Option` returned by `HashMap::get()` gets transformed directly with `.and_then()` — expired means None, valid means Some. It communicates intent better than extracting the value and branching with `if`.
+
+The same feel carries over to Iterators. Here's fetching a list of S3 buckets:
+
+```rust
+let buckets = resp.buckets().iter()
+    .filter_map(|b| {
+        b.name().map(|name| S3Item::Bucket {
+            name: name.to_string(),
+        })
+    })
+    .collect();
+```
+
+`.filter_map()` means "drop the Nones, keep the insides of the Somes." Buckets without names get skipped; the ones with names become `S3Item`s. In Go you'd write a `for` loop with `if name != nil` inside, but in Rust it's one chain.
+
+Same story with Result. Formatting a JSON preview:
+
+```rust
+serde_json::from_str::<serde_json::Value>(content)
+    .and_then(|v| serde_json::to_string_pretty(&v))
+    .unwrap_or_else(|_| content.to_string())
+```
+
+If parsing succeeds, pretty-print it; if it fails, return the original text. The `and_then` → `unwrap_or_else` chain handles the error case in a single expression.
+
+Once you learn `.map().filter().collect()` on Iterator, you find `.map().unwrap_or()` works the same way on Option. `.map_err().and_then()` reads naturally on Result too. And once `and_then` clicks, Future chains start making sense without resistance.
+
+Learn one pattern, and it works across other types. Knowledge connects laterally. That might be the most enjoyable thing about writing Rust.
 
 ## In Closing
 
-Ownership, Result types, combinators. These might look like separate features, but I think they share the same design philosophy: Rust asks you to think, and rewards that thinking with safety and expressiveness.
+Getting hit by ownership, struggling with lifetimes, and yet getting pulled back in by the satisfaction of combinators. That's the kind of language Rust is, I think.
 
-It'll take more time before I fully understand everything Rust has to offer. But I'm drawn to this "slightly difficult" quality. Choosing a kind of friction that work doesn't require, deliberately, in my own time — that's what growth feels like to me, and that's why I write Rust.
+Deliberately choosing a kind of difficulty that work doesn't demand, in my personal time. Picking the harder path. That's all there is to it.
 
 I've been reading [*Unit Testing Principles, Practices, and Patterns*](https://www.amazon.co.jp/dp/4839981728) lately. I might write about that too, when the mood strikes.
