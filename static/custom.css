@@ -85,6 +85,19 @@
 .hero .tech-line .dot {
   opacity: 0.15;
 }
+.hero .hero-badge {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.hero .hero-badge img {
+  opacity: 0.5;
+  transition: opacity var(--transition-fast);
+  vertical-align: middle;
+}
+.hero .hero-badge:hover img {
+  opacity: 1;
+}
 
 /* ─── Section Label (top page) ─── */
 .section-label {
