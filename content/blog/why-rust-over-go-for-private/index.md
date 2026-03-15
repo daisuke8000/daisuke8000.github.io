@@ -4,7 +4,7 @@ description = "仕事ではGoやTypeScriptを書くエンジニアが、プラ�
 date = 2026-03-15
 
 [taxonomies]
-tags = ["rust", "go", "essay"]
+tags = ["rust", "go"]
 
 [extra]
 toc = true

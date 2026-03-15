@@ -4,7 +4,7 @@ description = "A software engineer who writes Go and TypeScript at work explores
 date = 2026-03-15
 
 [taxonomies]
-tags = ["rust", "go", "essay"]
+tags = ["rust", "go"]
 
 [extra]
 toc = true
@@ -17,7 +17,7 @@ Why Rust? It's not easy to explain, but I'd like to try.
 
 ## What I Look for at Work vs. Personal Projects
 
-Go and TypeScript are simple, with low cognitive overhead. The learning curve is gentle, and new team members can start contributing quickly. As work languages, that's a major strength.
+Go is simple, with low cognitive overhead. TypeScript is easy to pick up as an extension of JavaScript. Compared to Rust, both have gentler learning curves, and new team members can ramp up quickly. As work languages, that's a major strength.
 
 But what I look for in personal projects is different.
 
@@ -29,7 +29,7 @@ This isn't about Go or TypeScript being bad languages. It's simply that differen
 
 Rust is demanding. Ownership, borrowing, lifetimes. The compiler shows no mercy.
 
-At first, there was real resistance. Code that would compile fine in Go or TypeScript gets rejected in Rust. In Go or TypeScript, you can quickly get something "kind of working." In Rust, that's not an option.
+At first, there was real resistance. Code that would compile fine in Go or TypeScript gets rejected in Rust. In Go especially, you can get to a working state without thinking about memory management or ownership. In Rust, that's not an option.
 
 But after writing Rust for a while, things change. You get better at reading compiler errors. You start having those moments of "ah, so that's how you write it." You realize the compiler is strict because it's pushing you to think.
 
@@ -48,28 +48,30 @@ if err != nil {
 }
 ```
 
-You write `if err != nil` over and over. Honestly, a lot of it feels habitual. If you forget to check, the code still compiles and runs. That leaves a small sense of unease.
+You write `if err != nil` over and over. By design, this is meant to make you think about how to handle each error. But honestly, a lot of it feels like ritual — writing it because that's what you do. If you discard the error with `_` or ignore the return values entirely, the code compiles and runs just fine ([try it on Go Playground](https://go.dev/play/p/io24YnMyZmP)). That leaves a small sense of unease.
 
 In Rust, success and failure are wrapped in a single type: `Result<T, E>`.
 
 ```rust
 match do_something() {
-    Ok(value) => /* handle success */,
-    Err(e) => /* handle failure */,
+    Ok(value) => { /* handle success */ },
+    Err(e) => { /* handle failure */ },
 }
 ```
 
-Pattern matching forces you to handle both cases — the code won't compile otherwise. You can't forget. So when it does compile, you can say "I've considered every error case." That's a kind of confidence I never got from Go.
+With `match`, you must cover both `Ok` and `Err` or the code won't compile. You can also use the `?` operator for early returns, but either way, you have to acknowledge the possibility of errors to access what's inside a Result. Of course, Rust also lets you `.unwrap()` (which panics on error) or write `let _ =` to ignore a Result. But those are conscious choices — qualitatively different from the risk of silently overlooking errors in Go ([try it on Rust Playground](https://play.rust-lang.org/?gist=eb9d1d7b90562d892fb90349b713e0a8)). Tools like `errcheck` can catch this in Go, but Rust's compiler warns you by default. The default level of safety is simply different. That sense of confidence was hard to get in Go.
 
 And there's more: you can transform the contents of a Result without unwrapping it.
 
 ## The Joy of Operating on the Box
 
-Coming from Go, you don't really build logic through method chains. The standard approach is to assign to a variable at each step and check errors along the way.
+In Go, builder patterns and similar use method chains, but there's no idiom for chaining combinators on types like Option or Result. The standard approach is to assign to a variable at each step and check errors along the way.
 
 In Rust, Option, Result, and Iterator all have `.map()` and `.and_then()`.
 
 ```rust
+// get_config() → Option<Config>
+// u.name() → Option<String> (name may not be set)
 let name = get_config()
     .map(|c| c.user)
     .and_then(|u| u.name());
@@ -77,7 +79,7 @@ let name = get_config()
 
 You can chain transformations without extracting the value. This "operating on the box" feeling was genuinely fun to discover.
 
-It might be familiar if you come from Python or Ruby. But in Rust, it's all type-checked. If types don't line up inside `.map()`, you get a compile error. Expressive and safe.
+It might be familiar if you come from Ruby, Kotlin, or Swift. But in Rust, it's all type-checked. If types don't line up inside `.map()`, you get a compile error. Expressive and safe.
 
 What's more, the API design is consistent. Once you learn `.map().filter().collect()` on Iterator, you find the same patterns on Option with `.map().unwrap_or()`, and on Result too. One pattern unlocks many types. Knowledge connects laterally.
 
