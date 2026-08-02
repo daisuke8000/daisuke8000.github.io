@@ -1,0 +1,175 @@
+---
+import PageLayout from "blume/components/layout/PageLayout.astro";
+import data from "blume:data";
+
+const { config } = data;
+const locale = config.i18n?.defaultLocale ?? "en";
+const ui = data.uiByLocale[locale] ?? data.ui;
+
+const projects = [
+  {
+    slug: "coral",
+    index: "01",
+    title: "Coral",
+    description: "A tool for turning gRPC / Protobuf dependencies into a graph you can explore.",
+    stack: "Rust · TypeScript · React",
+    href: "/projects/coral/",
+    github: "https://github.com/daisuke8000/coral",
+  },
+  {
+    slug: "rustern",
+    index: "02",
+    title: "rustern",
+    description: "A CLI for tailing logs across Kubernetes pods and containers.",
+    stack: "Rust · Kubernetes · CLI",
+    href: "/projects/rustern/",
+    github: "https://github.com/daisuke8000/rustern",
+  },
+];
+---
+
+<PageLayout
+  site={{ title: config.title, description: config.description }}
+  logo={config.logo}
+  navigation={data.navigation}
+  favicon={config.favicon}
+  fontCssVars={data.fontCssVars}
+  themeMode={config.theme.mode}
+  searchEnabled={config.search.enabled}
+  siteUrl={config.site}
+  ogEnabled={config.og.enabled}
+  locale={locale}
+  ui={ui}
+  page={{ title: "dsk8.dev — tools built with Rust", description: config.description, route: "/" }}
+>
+  <div class="showcase">
+    <section class="hero-split" aria-labelledby="hero-title">
+      <div class="hero-copy reveal">
+        <span class="hero-kicker">dsk8.dev / selected work</span>
+        <h1 id="hero-title" class="hero-title">Tools that explain themselves.</h1>
+        <p class="hero-lede">
+          I work with Go and TypeScript professionally, and build CLI tools and developer utilities in Rust. This is a small selection of work I want to share.
+        </p>
+        <div class="hero-actions">
+          <a class="link-primary" href="#work">View work</a>
+          <a class="link-secondary" href="https://github.com/daisuke8000" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <div class="code-panel reveal" aria-label="rustern command preview">
+        <div class="code-panel-head">
+          <span>rustern</span>
+          <span>command</span>
+        </div>
+        <pre><code><span class="code-prompt">$</span> <span data-type="rstn deploy/api -n production -f">rstn deploy/api -n production -f</span>
+<span class="code-comment"># follow logs from many pods and containers</span>
+<span class="code-status">ready</span></code></pre>
+      </div>
+    </section>
+
+    <section id="work" class="work" aria-labelledby="work-title">
+      <div class="work-heading reveal">
+        <h2 id="work-title">Selected work</h2>
+        <p>Tools with a clear purpose, a useful interface, and enough detail to reward a closer look.</p>
+      </div>
+
+      {projects.map((project, projectIndex) => (
+        <article class:list={["project", projectIndex === 1 ? "project--reverse" : "", "reveal"]} id={project.slug}>
+          <div class="project-copy">
+            <span class="project-index">{project.index} / project</span>
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-description">{project.description}</p>
+            <p class="project-meta">
+              {project.stack.split(" · ").map((item) => <span>{item}</span>)}
+            </p>
+            <div class="project-links">
+              <a class="link-primary" href={project.href}>View project</a>
+              <a class="project-link" href={project.github} target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+
+          {project.slug === "coral" ? (
+            <figure class="project-visual">
+              <figcaption class="visual-caption"><span>Coral</span><span>dependency map</span></figcaption>
+              <div class="graph-visual" role="img" aria-label="A graph showing services, messages, and enums connected by protobuf dependencies">
+                <svg viewBox="0 0 720 420" aria-hidden="true">
+                  <path d="M160 100 360 210M160 320 360 210M360 210 560 100M360 210 560 320" fill="none" stroke="var(--color-graphite-rule)" stroke-width="2" />
+                  <rect x="82" y="62" width="156" height="76" rx="6" fill="var(--color-graphite-2)" stroke="var(--color-accent)" />
+                  <rect x="82" y="282" width="156" height="76" rx="6" fill="var(--color-graphite-2)" stroke="var(--color-graphite-rule)" />
+                  <rect x="282" y="172" width="156" height="76" rx="6" fill="var(--color-graphite-2)" stroke="var(--color-accent)" />
+                  <rect x="482" y="62" width="156" height="76" rx="6" fill="var(--color-graphite-2)" stroke="var(--color-graphite-rule)" />
+                  <rect x="482" y="282" width="156" height="76" rx="6" fill="var(--color-graphite-2)" stroke="var(--color-graphite-rule)" />
+                  <text x="160" y="106" fill="var(--color-graphite-ink)" text-anchor="middle" font-family="var(--font-mono)" font-size="16">Service</text>
+                  <text x="160" y="326" fill="var(--color-graphite-muted)" text-anchor="middle" font-family="var(--font-mono)" font-size="16">Enum</text>
+                  <text x="360" y="216" fill="var(--color-graphite-ink)" text-anchor="middle" font-family="var(--font-mono)" font-size="16">Message</text>
+                  <text x="560" y="106" fill="var(--color-graphite-muted)" text-anchor="middle" font-family="var(--font-mono)" font-size="16">Message</text>
+                  <text x="560" y="326" fill="var(--color-graphite-muted)" text-anchor="middle" font-family="var(--font-mono)" font-size="16">Enum</text>
+                </svg>
+              </div>
+            </figure>
+          ) : (
+            <figure class="project-visual">
+              <figcaption class="visual-caption"><span>rustern</span><span>log stream</span></figcaption>
+              <div class="terminal-visual" role="img" aria-label="A terminal command for following Kubernetes deployment logs">
+                <pre><code><span class="accent">$</span> rstn deploy/api -n production -f
+
+<span class="muted"># many pods · many containers</span>
+<span class="muted"># include, exclude, highlight</span>
+<span class="muted"># exit-on-level · stats</span>
+
+<span class="accent">watching</span> deployment/api</code></pre>
+              </div>
+            </figure>
+          )}
+        </article>
+      ))}
+    </section>
+  </div>
+
+  <footer slot="footer" class="site-footer showcase">
+    <p class="footer-statement">Build something worth opening twice.</p>
+    <div class="footer-meta">
+      <span>dsk8.dev</span>
+      <span>© {new Date().getFullYear()} daisuke8000</span>
+    </div>
+  </footer>
+</PageLayout>
+
+<script>
+  document.documentElement.classList.add("js");
+
+  const revealItems = document.querySelectorAll(".reveal");
+  const reveal = (element) => element.classList.add("is-in");
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealItems.forEach(reveal);
+  } else if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+  } else {
+    revealItems.forEach(reveal);
+  }
+
+  const typeTarget = document.querySelector("[data-type]");
+  if (typeTarget && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const text = typeTarget.dataset.type ?? "";
+    typeTarget.textContent = "";
+    let index = 0;
+    const timer = window.setInterval(() => {
+      typeTarget.textContent = text.slice(0, index + 1);
+      index += 1;
+      if (index >= text.length) window.clearInterval(timer);
+    }, 28);
+  }
+</script>

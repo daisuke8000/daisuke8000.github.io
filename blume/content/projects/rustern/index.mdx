@@ -1,0 +1,28 @@
+---
+title: rustern
+description: A Rust CLI for tailing logs across Kubernetes pods and containers.
+type: project
+featured: true
+order: 2
+status: active
+role: Design and implementation
+github: https://github.com/daisuke8000/rustern
+stack:
+  - Rust
+  - Kubernetes
+  - CLI
+  - stern parity
+---
+
+rustern (command: `rstn`) is a CLI for following logs from multiple pods and containers as a single stream. It brings the familiar workflow of stern and kubectl to Rust, with additional features for day-to-day log investigation.
+
+## What it does
+
+- Resolve target pods from Deployments and other workloads
+- Filter by namespace, label selector, and container
+- Follow or run once with timestamps and regular-expression filters
+- rustern-plus features such as `--exit-on`, `--exit-on-level`, `--stats`, and `--cursor-reconnect`
+
+## Links
+
+- [GitHub](https://github.com/daisuke8000/rustern)

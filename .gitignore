@@ -1,7 +1,8 @@
-public/
 *.swp
 *.swo
 *~
 .DS_Store
-docs/
-.superpowers/
+blume/node_modules/
+blume/.astro/
+blume/.blume/
+blume/dist/
