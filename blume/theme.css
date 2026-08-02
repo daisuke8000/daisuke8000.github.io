@@ -1,22 +1,22 @@
 :root {
-  --color-paper: oklch(98.5% 0.004 250);
-  --color-paper-2: oklch(96.5% 0.006 250);
-  --color-paper-3: oklch(93.5% 0.008 250);
-  --color-ink: oklch(24% 0.02 258);
-  --color-ink-2: oklch(34% 0.018 257);
-  --color-muted: oklch(50% 0.012 257);
-  --color-faint: oklch(65% 0.009 250);
-  --color-rule: oklch(87% 0.008 250);
-  --color-rule-strong: oklch(78% 0.012 250);
-  --color-accent: oklch(58% 0.20 256);
-  --color-accent-soft: oklch(93% 0.035 256);
-  --color-accent-ink: oklch(98% 0.004 250);
-  --color-focus: oklch(55% 0.20 256);
-  --color-graphite: oklch(22% 0.016 260);
-  --color-graphite-2: oklch(28% 0.018 260);
-  --color-graphite-ink: oklch(94% 0.008 250);
-  --color-graphite-muted: oklch(75% 0.012 250);
-  --color-graphite-rule: oklch(53% 0.012 260);
+  --color-paper: oklch(97.5% 0.012 75);
+  --color-paper-2: oklch(95% 0.014 72);
+  --color-paper-3: oklch(91.5% 0.016 68);
+  --color-ink: oklch(24% 0.018 45);
+  --color-ink-2: oklch(34% 0.016 45);
+  --color-muted: oklch(50% 0.014 55);
+  --color-faint: oklch(65% 0.011 65);
+  --color-rule: oklch(87% 0.012 72);
+  --color-rule-strong: oklch(78% 0.015 62);
+  --color-accent: oklch(56% 0.17 35);
+  --color-accent-soft: oklch(92% 0.04 45);
+  --color-accent-ink: oklch(98% 0.01 75);
+  --color-focus: oklch(52% 0.18 35);
+  --color-graphite: oklch(22% 0.016 45);
+  --color-graphite-2: oklch(28% 0.018 45);
+  --color-graphite-ink: oklch(94% 0.01 75);
+  --color-graphite-muted: oklch(75% 0.012 65);
+  --color-graphite-rule: oklch(53% 0.014 45);
 
   --font-display: var(--blume-font-display, "Space Grotesk"), sans-serif;
   --font-body: var(--blume-font-body, "Inter"), sans-serif;
@@ -64,24 +64,24 @@
 }
 
 :root[data-theme="dark"] {
-  --color-paper: oklch(15% 0.01 258);
-  --color-paper-2: oklch(18% 0.012 258);
-  --color-paper-3: oklch(22% 0.014 258);
-  --color-ink: oklch(94% 0.008 250);
-  --color-ink-2: oklch(86% 0.01 250);
-  --color-muted: oklch(72% 0.012 250);
-  --color-faint: oklch(58% 0.01 250);
-  --color-rule: oklch(31% 0.012 258);
-  --color-rule-strong: oklch(41% 0.014 258);
-  --color-accent: oklch(66% 0.16 256);
-  --color-accent-soft: oklch(25% 0.045 256);
-  --color-accent-ink: oklch(16% 0.01 258);
-  --color-focus: oklch(70% 0.16 256);
-  --color-graphite: oklch(21% 0.016 260);
-  --color-graphite-2: oklch(27% 0.018 260);
-  --color-graphite-ink: oklch(94% 0.008 250);
-  --color-graphite-muted: oklch(76% 0.012 250);
-  --color-graphite-rule: oklch(48% 0.012 260);
+  --color-paper: oklch(16% 0.012 45);
+  --color-paper-2: oklch(19% 0.014 45);
+  --color-paper-3: oklch(23% 0.016 45);
+  --color-ink: oklch(94% 0.01 75);
+  --color-ink-2: oklch(86% 0.012 65);
+  --color-muted: oklch(72% 0.01 65);
+  --color-faint: oklch(58% 0.009 60);
+  --color-rule: oklch(31% 0.012 45);
+  --color-rule-strong: oklch(41% 0.014 45);
+  --color-accent: oklch(68% 0.16 35);
+  --color-accent-soft: oklch(25% 0.045 35);
+  --color-accent-ink: oklch(18% 0.012 45);
+  --color-focus: oklch(72% 0.16 35);
+  --color-graphite: oklch(21% 0.016 45);
+  --color-graphite-2: oklch(27% 0.018 45);
+  --color-graphite-ink: oklch(94% 0.01 75);
+  --color-graphite-muted: oklch(76% 0.012 65);
+  --color-graphite-rule: oklch(48% 0.014 45);
 }
 
 html,

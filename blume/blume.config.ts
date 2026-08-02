@@ -23,10 +23,10 @@ export default defineConfig({
     },
   },
   theme: {
-    accent: "oklch(58% 0.20 256)",
+    accent: "oklch(56% 0.17 35)",
     background: {
-      light: "oklch(98.5% 0.004 250)",
-      dark: "oklch(15% 0.01 258)",
+      light: "oklch(97.5% 0.012 75)",
+      dark: "oklch(16% 0.012 45)",
     },
     radius: "sm",
     mode: "light",
