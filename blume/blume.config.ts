@@ -37,7 +37,6 @@ export default defineConfig({
     },
   },
   deployment: {
-    output: "static",
     site: "https://daisuke8000.github.io",
   },
   seo: {
